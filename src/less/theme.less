@@ -1,11 +1,33 @@
 
-.theme(@backgroundColor: #EEEEEE, @contentColor: #AAAAAA, @fontColor: #111111){
+.theme(@backgroundColor: rgba(255,255,255, 0.3), @contentColor: #ffffff, @fontColor: #000000){
+  #header{
+    width:100%;
+    height: 400px;
+    position: relative;
+    >div{
+      width: 100%;
+      height: 400px;
+      position: absolute;
+      left:0;
+      top:0;
+      overflow: hidden;
+      img {
+        width:100%
+      }
+    }
+  }
   nav {
     /* padding: 30px; */
+    width: 100%;
     height:60px;
     display:flex;
     align-items: center;
-    background-color: @backgroundColor;
+   background-color: @backgroundColor;
+    position: fixed;
+    // opacity:0.3;
+    top:0;
+    left:0;
+    z-index: 100;
     .left {
       width:30%;
     }
@@ -24,18 +46,27 @@
     }
     a.router-link-exact-active {
         color: #42b983;
+    }
+
+      .switchStyle {
+        .el-switch__label--right{
+           color:#fff;
+      }
       }
   }
 
   #content {
-    width:100%;
+    width:calc(100% - 120px);
+    padding: 20px 60px;
     min-height: 400px;
     background-color: @contentColor;
   }
 
   #footer {
     width:100%;
-    min-height: 400px;
+    min-height: 200px;
     background-color: @backgroundColor;
+    color:@fontColor;
+    display: flex;
   }
 }
