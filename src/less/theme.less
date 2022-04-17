@@ -1,0 +1,41 @@
+
+.theme(@backgroundColor: #EEEEEE, @contentColor: #AAAAAA, @fontColor: #111111){
+  nav {
+    /* padding: 30px; */
+    height:60px;
+    display:flex;
+    align-items: center;
+    background-color: @backgroundColor;
+    .left {
+      width:30%;
+    }
+
+    .middle {
+      width:40%
+    }
+
+    .right {
+      width:30%;
+    }
+    a {
+      margin-right: 20px;
+      font-weight: bold;
+      color: @fontColor;
+    }
+    a.router-link-exact-active {
+        color: #42b983;
+      }
+  }
+
+  #content {
+    width:100%;
+    min-height: 400px;
+    background-color: @contentColor;
+  }
+
+  #footer {
+    width:100%;
+    min-height: 400px;
+    background-color: @backgroundColor;
+  }
+}
