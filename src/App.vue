@@ -5,17 +5,17 @@
     <div class="dynamic_shuffl" v-for="(item, i) in bgPictures" :key="i">
       <img src="./assets/bg1.png">
       <!-- <img :src="item"> -->
-      Todo: 这里的item需要替换成图片的地址才能实现轮播
+        Todo: 这里的item需要替换成图片的地址才能实现轮播
     </div>
   </div>
 
   <div id="content">
-    content
      <router-view/>
+     <!-- <content-view></content-view> -->
   </div>
 
   <div id="footer">
-  <footer-view></footer-view>
+    <footer-view></footer-view>
   </div>
 </div>
 
@@ -23,11 +23,13 @@
 
 <script>
 import HeaderBar from './components/HeaderBar.vue';
-import FooterView from './components/FooterView.vue';
+import FooterView from './views/FooterView.vue';
+import HomeView from './views/HomeView.vue';
 export default {
   components: {
     HeaderBar,
-    FooterView
+    FooterView,
+    HomeView
    },
   data(){
     return {
