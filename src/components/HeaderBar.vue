@@ -5,9 +5,10 @@
       <router-link to="/news">新闻</router-link>
       <router-link to="/algothrom">聊天室</router-link>
     </div>
-    <div class="middle"></div>
+    <div class="middle">
+      <SearchInput ></SearchInput>
+    </div>
     <div class="right">
-      <input-box></input-box>
       <router-link to="/">登录</router-link>
       <router-link to="/about">注册</router-link>
       <el-switch
@@ -22,13 +23,11 @@
 </template>
 
 <script>
-import InputBox from "./InputBox.vue"
 
 export default {
   name: 'HeaderBar',
   components:{
-    InputBox
-  },
+},
   props: {
     msg: String
   },

@@ -1,15 +1,5 @@
 <template>
     <div class="left">
-         <el-card class="article-container">
-            <template #header>
-            <div class="card-header">
-                <span>今日热搜</span>
-                <!-- <el-button class="button" type="text">更多>>></el-button> -->
-            </div>
-            </template>
-            <div><search-component></search-component></div>
-        </el-card>
-
         <el-card class="article-container">
             <template #header>
             <div class="card-header">

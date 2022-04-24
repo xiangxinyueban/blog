@@ -44,7 +44,7 @@ export default {
       setInterval(()=>{
         index++
         index =  index % menuImg.length
-        console.log(index)
+        // console.log(index)
         for (let i of menuImg) {
          i.style.opacity = 0
         }
