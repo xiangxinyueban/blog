@@ -37,7 +37,10 @@ scp -r dist root@xx.xx.xx.xx:/html
 
 <script>
 export default {
-    name:"ArticleAbbrevation"
+    name:"ArticleAbbrevation",
+    setup(){
+      return {}
+    }
 }
 </script>
 

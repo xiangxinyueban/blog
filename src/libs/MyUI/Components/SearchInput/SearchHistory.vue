@@ -7,7 +7,7 @@
             <el-tag
             size="large"
             type=""
-            closable="true"
+            :closable="true"
             v-for="(item, index) in history"
             :key="index"
             @click="handleClick(item)"

@@ -1,7 +1,12 @@
 import Vuex from 'vuex'
+import state from './state'
+import mutations from './mutations'
 
-export default new Vuex.Store({
-  state: {
-    isDarkTheme: false
-  }
+export default Vuex.createStore({
+  state,
+  mutations,
+
+  // state: {
+  //   isDarkTheme: false
+  // }
 })

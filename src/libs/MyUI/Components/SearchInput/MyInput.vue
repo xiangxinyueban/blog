@@ -28,7 +28,7 @@ export default {
 
 <style lang="less" scoped>
 .input-container{
-    position: relative;
+    // position: relative;
     width:500px;
     height:100%;
     // line-height: 40px;

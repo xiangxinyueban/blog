@@ -17,7 +17,7 @@ export default {
         }, false);
 
         document.addEventListener('click', function(event){
-            console.log("失焦", el);
+            // console.log("失焦", el);
             if (!(event.target == el) && !el.contains(event.target)){
                 oInputContainer.style.borderRadius = '4px';
                 oInput.style.backgroundColor = "#f9f9f9";
