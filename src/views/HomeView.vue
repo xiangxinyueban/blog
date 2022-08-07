@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="home-content">
     <div id="header">
     <div class="dynamic_shuffl" v-for="(item, i) in bgPictures" :key="i">
       <img src="@/assets/bg1.png">
@@ -25,11 +25,23 @@
                 <el-button class="button" type="text">更多>>></el-button>
             </div>
             </template>
-            <div>
+            
+                <el-card class="articleitem" v-for="article in articleList" :key="article.id">
+                <!-- <template #header>
+                <div class="article-card-header">
+                    <span>{{ article.title }}</span>
+                    <div>
+                    <el-button class="button" type="primary" text >编辑</el-button>
+                    <el-button class="button" text>删除</el-button>
+                    </div>
+                </div>
+                </template> -->
+                <!-- <p>{{article.content}}</p> -->
+                <v-md-preview :text="article.content"></v-md-preview>
+                </el-card>
+                <!-- <article-abbreviation v-for="article in articleList" :key="article.id"></article-abbreviation> -->
 
-                <article-abbreviation v-for="o in 4" :key="o"></article-abbreviation>
-
-            </div>
+            
         </el-card>
 
     </div>
@@ -59,7 +71,10 @@
 
 <script>
 import ArticleAbbreviation from "@/components/ArticleAbbreviation.vue";
-import { onMounted } from "vue";
+import {GetArticleList, ArticleDetail} from "@/services/article"
+import { ElMessage } from "element-plus";
+import { onMounted, ref } from "vue";
+
 // import SearchComponent from "../components/SearchComponent.vue"
 export default {
     name: "HomeView",
@@ -83,11 +98,34 @@ export default {
             }, 3000)
 
         };
+        let articleList = ref([]);
+      const initArticles = async() => {
+        let data = await GetArticleList();
+        if (data.status != "success"){
+            ElMessage({
+                    message: '获取文章列表失败',
+                    type: 'error',
+                });
+        } else{
+           ElMessage({
+                    message: '获取文章列表成功',
+                    type: 'success',
+                });
+          // console.log("列表：", data.data);
+          articleList.value.push(...data.data);
+          console.log("文章详情:", data.data);
+          // tableRef.value.doLayout();
+          // console.log("articleList", articleList);
+        }
+        };
         onMounted(()=>{
             dynamicPlay();
+            initArticles();
+            console.log("窗口高度:",document.documentElement.clientHeight);
         })
         return {
-            bgPictures:["@/assets/bg1.png","@/assets/bg2.png","@/assets/bg3.jpg","@/assets/bg4.jpg","@/assets/bg5.jpg"]
+            bgPictures:["@/assets/bg1.png","@/assets/bg2.png","@/assets/bg3.jpg","@/assets/bg4.jpg","@/assets/bg5.jpg"],
+            articleList
         }
     }
 }
@@ -95,7 +133,7 @@ export default {
 
 <style lang="less" scoped>
   #header{
-      margin:0;
+    margin:0;
     width:100%;
     height: 300px;
     position: relative;
@@ -154,5 +192,25 @@ export default {
 
     // width:400px;
 }
+
+.articleitem{
+   width:100%;
+//    min-height:calc(50% - 10px);
+
+}
+
+.home-content{
+    width:100%;
+}
+
+// .article-card-header {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// }
+
+// .articleitem{
+//   margin-bottom:10px;
+// }
 
 </style>

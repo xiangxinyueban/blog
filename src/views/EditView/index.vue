@@ -38,8 +38,8 @@ export default {
                     waitingTime: 2,
                     save(editor) {
                         return new Promise(resolve => {
-                            console.log("autoSave", editor.getData());
-                            console.log("articleDetail:", articleDetail);
+                            // console.log("autoSave", editor.getData());
+                            // console.log("articleDetail:", articleDetail);
                             articleDetail.title = "TODO";
                             articleDetail.content = editor.getData();
                             create(articleDetail);

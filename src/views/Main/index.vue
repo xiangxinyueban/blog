@@ -1,5 +1,6 @@
 <template>
 <div :class="[ this.$store.state.isDarkTheme? 'dark' : 'light']">
+
 <header-bar></header-bar>
   <div id="header" style="height: 60px;">
   </div>
@@ -27,6 +28,7 @@ export default {
    },
    setup(){
      document.querySelector('body').setAttribute('style', 'margin:0;')
+     
    },
 };
 </script>

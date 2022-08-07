@@ -45,6 +45,11 @@ const routes = [
         path: 'edit',
         name:"edit",
         component: EditView//() => import('../views/EditView')
+      },
+      {
+        path: 'news',
+        name:"news",
+        component: () => import('../views/News')
       }
     ]
   },

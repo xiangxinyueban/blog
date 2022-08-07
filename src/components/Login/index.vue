@@ -11,14 +11,16 @@
                 <el-radio-button label="注册" />
             </el-radio-group>
             </div>
+
+            <!-- 登录框 -->
             <div v-show="tabName=='登录'">
             <el-form ref="loginFormRef"
                 :model="userInfo"
                 :rules="rules">
-                <el-form-item prop="nick_name">
+                <el-form-item prop="username">
                     <el-input
                     placeholder="用户名"
-                    v-model="userInfo.nick_name">
+                    v-model="userInfo.username">
                         <template #prefix>
                             <el-icon class="el-input__icon">
                                 <i class="icofont-user-alt-7"></i>
@@ -38,6 +40,21 @@
                         </template>
                     </el-input>
                 </el-form-item>
+                <el-form-item prop="verifyCode">
+                    <el-input
+                    placeholder="验证码"
+                    v-model="tmpVerify.verifyCode">
+                        <template #prefix>
+                            <el-icon class="el-input__icon">
+                                <i class="icofont-user-alt-7"></i>
+                            </el-icon>
+                        </template>
+                    </el-input> 
+                </el-form-item>
+                <el-form-item>
+                <img id="captcha" :src="captchaUrl"/>
+                <el-button @click="initCaptcha">换一张</el-button>
+                </el-form-item>
                 <el-form-item>
                     <el-button color="#626aef" class="login_btn" id="login" @click="submit(loginFormRef)">登录</el-button>
                 </el-form-item>
@@ -47,14 +64,16 @@
                 </el-row> -->
                 </el-form>
                 </div>
+
+                <!-- 注册框 -->
                 <div v-show="tabName=='注册'">
                 <el-form ref="registerFormRef"
                 :model="userInfo"
                 :rules="rules">
-                <el-form-item prop="nick_name">
+                <el-form-item prop="username">
                     <el-input
                     placeholder="用户名"
-                    v-model="userInfo.nick_name">
+                    v-model="userInfo.username">
                         <template #prefix>
                             <el-icon class="el-input__icon">
                                 <i class="icofont-user-alt-7"></i>
@@ -102,9 +121,10 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import request from '@/services'
+import { GetCaptcha } from "@/services/safety"
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import router from '@/router'
@@ -113,17 +133,22 @@ export default {
     setup(){
         const store = useStore();
         const userInfo = reactive({
-            nick_name: '',
+            username: '',
             password: '',
-            verificationcode: '',
-            email: ''
+            email: '',
+            user_id: 0
         })
+        const tmpVerify = reactive({
+            verifyCode:  '',
+            verifyId:  ''
+        })
+        
         let tabName = ref('登录');
         // tabName='first';
         const loginFormRef = ref('');
         const registerFormRef = ref('');
         const rules = reactive({
-            nick_name: [
+            username: [
                 { required: true, message: '用户名需1到30个字母或者数字', trigger: 'blur' },
                 { min: 1, max: 30, message: 'Length should be 1 to 30', trigger: 'blur' },
             ],
@@ -135,28 +160,45 @@ export default {
                 { required: true, message: '请输入正确的邮箱格式', trigger: 'blur' },
                 { min: 2, max: 30, message: 'Length should be 6 to 30', trigger: 'blur' },
             ]
-        })
-
+        });
+        const captchaUrl = ref("")
+        const initCaptcha = async()=>{
+            let data = await GetCaptcha();
+            console.log("验证码：", )
+            captchaUrl.value = data.captcha_result.base_64_blog
+            tmpVerify.verifyId = data.captcha_result.id
+        }
+        
+        onMounted(()=>{
+          initCaptcha();
+          // console.log("articleList", articleList);
+        });
         const submit = async (formEl) => {
             console.log("ruleFormRef", formEl);
             if (!formEl) return
             await formEl.validate((valid, fields) => {
                 console.log(valid);
                 if (valid) {
-                    const data = request("login", userInfo);
+                    const data = request("login", {...userInfo, ...tmpVerify});
                     data.then(function (response) {
                         console.log("返回值： ", response);
-                        if (response.status == "success") {
+                        if (response.code == "200") {
                         ElMessage({
                             message: '欢迎登录',
                             type: 'success',
                         });
                         localStorage.setItem("token", response.data.token);
-                        
-                        console.log("store:", store);  
+                        userInfo.user_id = response.data.user_id;
+                        console.log("store:", userInfo);  
                         store.commit("updateUserConfig", userInfo, true);
                         router.push('/main')
                         // updateLoginInfo(state, true);
+                    } else{
+                        initCaptcha();
+                        return ElMessage({
+                            message: response.msg,
+                            type: 'error',
+                    })
                     }
                     }); 
                     // console.log("返回值： ", data.token);
@@ -174,10 +216,10 @@ export default {
             await formEl.validate((valid, fields) => {
                 console.log(valid);
                 if (valid) {
-                    const data = request("register", userInfo);
+                    const data = request("register", {...userInfo, ...tmpVerify});
                     data.then(function (response) {
                         console.log("返回值： ", response, data, tabName);
-                        if (response.status == "success") {
+                        if (response.code == "200") {
                             tabName.value = '登录';
                             ElMessage({
                                 message: '注册成功，请登录',
@@ -206,6 +248,9 @@ export default {
             submit,
             registerSubmit,
             tabName,
+            captchaUrl,
+           tmpVerify,
+           initCaptcha
         }
     }
 }

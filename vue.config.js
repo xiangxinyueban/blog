@@ -9,8 +9,8 @@ module.exports = defineConfig({
     proxy:{
       "/api": {
         // target: "	http://127.0.0.1:4523/m1/1065593-0-default/",
-        target: "http://121.196.103.30:5000/",
-        // target: "http://localhost:5000/",
+        // target: "http://121.196.103.30:5000/",
+        target: "http://127.0.0.1:8080/",
         changeOrigin: true,
         ws:true,
         secure:false,

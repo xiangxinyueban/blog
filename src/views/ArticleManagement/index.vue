@@ -10,7 +10,8 @@
         </div>
       </div>
     </template>
-    <p>{{article.content}}</p>
+    <!-- <p>{{article.content}}</p> -->
+    <v-md-preview :text="article.content"></v-md-preview>
     </el-card>
      <!-- <el-table ref="tableRef" :data="articleList" style="width: 100%">
     <el-table-column prop="id" label="id" width="180" />
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import {GetArticleList, ArticleDetail} from "@/services/article"
+import {GetMyArticleList, ArticleDetail} from "@/services/article"
 import { ElMessage } from 'element-plus'
 import { onMounted, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
@@ -32,7 +33,7 @@ export default {
       // let tableRef = ref(null);
       let articleList = ref([]);
       const initArticles = async() => {
-        let data = await GetArticleList();
+        let data = await GetMyArticleList();
         if (data.status != "success"){
             ElMessage({
                     message: '获取文章列表失败',

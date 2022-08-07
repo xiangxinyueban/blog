@@ -24,7 +24,11 @@ function register(userconfig) {
         axiosPost({
             url: "/api/user/register",
             data: {...userconfig},
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
             success(data) {
+                console.log(data);
                 resolve(data);
             },
             error(err){

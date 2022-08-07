@@ -16,10 +16,24 @@ function create(articleDetail) {
     })
 }
 
-function GetArticleList() {
+function GetMyArticleList() {
     return new Promise((resolve, reject) => {
         axiosGet({
             url: "/api/blog/my_list",
+            success(data) {
+                resolve(data);
+            },
+            error(err){
+                reject(err)
+            }
+        })
+    })
+}
+
+function GetArticleList() {
+    return new Promise((resolve, reject) => {
+        axiosGet({
+            url: "/api/blog/list",
             success(data) {
                 resolve(data);
             },
@@ -67,6 +81,7 @@ export {
     create,
     SaveBlog,
     GetArticleList,
+    GetMyArticleList,
     ArticleDetail,
 }
 

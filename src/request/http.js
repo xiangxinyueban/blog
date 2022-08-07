@@ -7,6 +7,7 @@ function axiosPost(options) {
         method: 'post',
         headers: options.headers,
         withCredentials: options.withCredentials,
+        // data: options.data,
         data: qs.stringify({
             ...options.data,
             // key: ''//这里的key是存在vuex里面的用户token,如果用户未登录，key就是''

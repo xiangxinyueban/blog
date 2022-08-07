@@ -10,6 +10,7 @@ export default async (action,  userconfig) => {
         // case "register":
         //     data = await 
         case "register":
+            console.log(userconfig);
             data = await register(userconfig);
             break;
         case "logout":

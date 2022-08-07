@@ -25,9 +25,9 @@
       </el-button>
       </div>
       <div v-show="isLogin" style="display: flex; justify-content: center; align-items: center;">
-      <div class="box" style="position:relative;">
+      <div class="box" style="position:relative; display: flex; align-items: center;">
        <el-dropdown trigger="click" @command="handleCommand">
-      <el-avatar> {{userConfig.nick_name}} <arow-down/></el-avatar>
+      <el-avatar> {{userConfig.username}} <arow-down/></el-avatar>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item :icon="Edit" command="edit">新增博客</el-dropdown-item>
@@ -37,7 +37,15 @@
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-        
+    <el-button type="primary" style="margin-left: 16px" @click="drawer = true">
+      聊天室
+  </el-button>
+    <el-drawer v-model="drawer" title="聊天室" :with-header="false" size="50%">
+    <span>聊天室</span>
+    <chat-room></chat-room>
+    </el-drawer>
+    </div>  
+
         <!-- <div class="submenuContainer">
         <div class="submenuInner">
           <div class="menu"><router-link to="/main/editor">博客编辑</router-link></div>
@@ -50,7 +58,7 @@
           @click="logoff()">
           注销
       </el-button> -->
-      </div>
+      
     </div>
   <!-- <el-dialog v-model="dialogFormVisible" title="Shipping address">
     <el-form :model="form">
@@ -89,13 +97,16 @@
 
 <script>
 
-import { onMounted, computed, reactive } from 'vue';
+import { onMounted, onUnmounted, computed, reactive, ref} from 'vue';
 
 import { useStore } from 'vuex';
+import { useRouter, useRoute } from 'vue-router';
 
 import { logout } from '@/services/userauth';
 import router from '@/router';
-import { useRouter } from 'vue-router';
+
+
+import ChatRoom from '@/components/ChatRoom';
 
 import {
   ArrowDown,
@@ -113,6 +124,7 @@ import {
 export default {
   name: 'HeaderBar',
   components:{
+    ChatRoom
   },
   setup(){
     const store = useStore(),
@@ -162,6 +174,7 @@ export default {
      }
         
     };
+    const drawer = ref(false);
     return {
       // element-plus icon组件导入
       Edit,
@@ -174,7 +187,7 @@ export default {
       logoff,
       value,
       toLogin,
-      
+      drawer,
     }
   },
   data() {
@@ -259,7 +272,7 @@ export default {
 }
 
 .el-avator{
-  :hover{
+  &:hover{
     border: 1px solid blue;
   }
 }
