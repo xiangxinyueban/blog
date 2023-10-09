@@ -1,57 +1,13 @@
 import { createApp } from 'vue'
-
 import App from './App.vue'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 import router from './router'
-import store from '@/store'
-import ElementUI from 'element-plus'
-import MyUI from '@/libs/MyUI'
-import 'element-plus/theme-chalk/index.css'
-import '@/assets/icofont/icofont.css'
-
-// 
-import VMdPreview from '@kangc/v-md-editor/lib/preview';
-import '@kangc/v-md-editor/lib/style/preview.css';
-import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
-import '@kangc/v-md-editor/lib/theme/style/github.css';
-
-// highlightjs
-import hljs from 'highlight.js';
-
-VMdPreview.use(githubTheme, {
-  Hljs: hljs,
-});
 
 
-// CKEditor
-// import CKEditor from '@ckeditor/ckeditor5-vue';
+const app = createApp(App)
 
+app.use(router)
+app.use(ElementPlus)
+app.mount('#app')
 
-router.beforeEach((to,from,next) => {
-    let token = localStorage.getItem("token");
-    // localStorage.clear();
-    if (token) {
-        store.state.isLogin = true;
-        // if (!to.meta.isLogin) {
-        //     next({
-        //         path:'/main'
-        //     })
-        // } else {
-            
-        store.state.userConfig = JSON.parse(localStorage.getItem("userConfig"));
-            next();    
-        // }
-        
-        //如果已经登录，还想进入登录注册界面，则定向到主界面。
-        
-    } else {
-        if (to.meta.isLogin) { //用户想进入需要登录的页面，则定向回登录界面。
-            next({
-                path: '/login'
-            })
-        } else { //用户进入无需登录的界面，则直接跳转。
-            next()
-        }
-    }
-})
-
-createApp(App).use(router).use(store).use(ElementUI).use(MyUI).use(VMdPreview).mount('#app')
