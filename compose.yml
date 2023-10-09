@@ -1,0 +1,22 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    expose:
+      - 9999
+    ports:
+      - "9999:8080"
+    volumes:
+      - .:/app
+
+  backend:
+    build: 
+      context: ../blogDjango
+      dockerfile: Dockerfile
+    expose:
+      - 8088
+    ports:
+      - "8088:8088"
+    volumes:
+      - ../blogDjango:/app

@@ -1,46 +1,28 @@
 <template>
-<el-scrollbar>
-  <div id="app">
-    <router-view></router-view>
-  </div>
-</el-scrollbar>
+  <!-- <router-link to="/">Go to Home</router-link>｜-->
+  <HeaderBar></HeaderBar>
+  <router-view/>
+  <HomeView msg="Welcome to Your Vue.js App"/>
 </template>
 
-<style lang="less">
-// ::-webkit-scrollbar {
-//   display: none;    
-// 	// width: 8px;
-// }
+<script>
+// import HelloWorld from './components/HelloWorld.vue'
+import HeaderBar from './components/HeaderBar.vue';
 
-* {
-    scrollbar-color: var(--el-scrollbar-bg-color) var(--el-fill-color-light);
-}
-::-webkit-scrollbar {
-    width: 6px;
-}
-::-webkit-scrollbar-thumb {
-    background-color: #0003;
-    border-radius: 10px;
-    transition: all .2s ease-in-out;
-}
 
-::-webkit-scrollbar-track {
-    border-radius: 10px;
+export default {
+    name: 'App',
+    components: { HeaderBar }
 }
-// ::-webkit-scrollbar-thumb {
-    
-// 	background-color: #eaecf1;
-// 	border-radius: 3px;
-// }
-// /*表格*/
-// .el-table__body-wrapper::-webkit-scrollbar {
-    
-// 	width: 10px;
-// 	height: 10px;
-// }
-// .el-table__body-wrapper::-webkit-scrollbar-thumb {
-    
-// 	background-color: #a1a3a9;
-// 	border-radius: 3px;
-// }
+</script>
+
+<style scoped>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 </style>
