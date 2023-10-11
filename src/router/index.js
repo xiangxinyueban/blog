@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 import HomeView from '../view/HomeView.vue'
-import EmptyView from '../view/EmptyView.vue'
+import ArticleView from '../view/ArticleView.vue'
 import AboutView from '../view/AboutView.vue'
 // import LoginView from '../components/Login'
 
@@ -17,15 +17,18 @@ const routes = [
         component: HomeView, // Component to load when this route is accessed
     },
     {
-        path: "/empty", // URL path
-        name: "EmptyView", // Name of the route
-        component: EmptyView, // Component to load when this route is accessed
+        path: "/article", // URL path
+        name: "ArticleView", // Name of the route
+        component: ArticleView, // Component to load when this route is accessed
     },
     {
         path: "/about", // URL path
         name: "AboutView", // Name of the route
         component: AboutView, // Component to load when this route is accessed
     },
+    {
+
+    }
     // {
     //     path: "/login", // URL path
     //     name: "LoginView", // Name of the route

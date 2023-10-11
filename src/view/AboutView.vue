@@ -11,7 +11,7 @@
                         <el-button class="button" @click="goToHome" type="text">更多>>></el-button>
                     </div>
                 </template>
-                <div v-for="o in 1" :key="o" class="text item">{{ 'List item ' + o }}</div>
+                <div v-for="(value, key) in articleList" :key="key" class="text item">{{ 'List item ' + value.id }} <el-button class="button" @click="viewDetail(value.id)" type="text" >详情>>></el-button> </div>
             </el-card>
 
             <el-card class="article-container">
@@ -82,14 +82,19 @@ export default {
         // import {GetArticleList, ArticleDetail} from "@/services/article"
         import router from "@/router";
         import service from "@/utils/service"
+        import { ref } from "vue";
         service.get("/users").then(res => {
             console.log("res:", res)
         }).catch(err => {
             console.log("err:", err)
         })
-        
+        const articleList = ref([]);
+        articleList.value.push({id: 1, title: "测试文章", content: "测试文章内容"})
         const goToHome = () => {
-            router.push("/empty")
+            router.push({path:"/empty"})
+        }
+        const viewDetail = (article_id) => {
+            router.push({path:"/article", query:{article_id: article_id}})
         }
         // import {ElMessage} from "element-plus";
         // import {onMounted, ref} from "vue";
@@ -218,5 +223,17 @@ export default {
 .content {
     display:flex;
     justify-content: space-around;
+}
+
+.item {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 40px;
+    line-height: 14px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 </style>
